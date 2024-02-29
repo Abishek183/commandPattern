@@ -2,10 +2,12 @@ import pkgutil
 import importlib
 from app.commands import CommandHandler
 from app.commands import Command
+from app.plugins.menu import MenuCommand
 
 class App:
     def __init__(self): # Constructor
         self.command_handler = CommandHandler()
+        menu_instance = MenuCommand(self.command_handler)
 
     def load_plugins(self):
         # Dynamically load all plugins in the plugins directory
@@ -17,9 +19,14 @@ class App:
                     item = getattr(plugin_module, item_name)
                     try:
                         if issubclass(item, (Command)):  # Assuming a BaseCommand class exists
-                            self.command_handler.register_command(plugin_name, item())
+                            if plugin_name == 'menu':
+                                menu_instance = MenuCommand(self.command_handler)
+                                self.command_handler.register_command(plugin_name, menu_instance)
+                            else:
+                                self.command_handler.register_command(plugin_name, item())
                     except TypeError:
                         continue  # If item is not a class or unrelated class, just ignore
+
     def start(self):
         # Register commands here
         self.load_plugins()
