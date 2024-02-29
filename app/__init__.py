@@ -11,13 +11,13 @@ class App:
 
 
     def start(self):
+        menu_instance = MenuCommand(self.command_handler)
         self.command_handler.register_command("greet", GreetCommand())
         self.command_handler.register_command("goodbye", GoodbyeCommand())
         self.command_handler.register_command("exit", ExitCommand())
-        self.command_handler.register_command("menu", MenuCommand())
+        self.command_handler.register_command("menu", menu_instance)
 
         print("Type 'exit' to exit and menu for list of commands")
         while True:  #REPL Read, Evaluate, Process, Loop
             self.command_handler.execute_command(input(">>> ").strip())
-
 

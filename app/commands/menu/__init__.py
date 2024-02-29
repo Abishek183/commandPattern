@@ -1,6 +1,9 @@
-from app.commands import Command, CommandHandler, list
+from app.commands import Command
 
 class MenuCommand(Command):
+    def __init__(self, command_handler):
+        self.command_handler = command_handler
+
     def execute(self):
-        self.command_handler = CommandHandler()
-        print("Menu",list)
+        menu_list = self.command_handler.menuList()
+        print("Menu", list(menu_list))
