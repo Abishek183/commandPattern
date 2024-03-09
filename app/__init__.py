@@ -21,7 +21,7 @@ class App:
         if os.path.exists(logging_conf_path):
             logging.config.fileConfig(logging_conf_path, disable_existing_loggers=False)
         else:
-            logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+            logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         logging.info("Logging configured.")
 
     def load_environment_variables(self):
@@ -73,7 +73,6 @@ class App:
             sys.exit(0)  # Assuming a KeyboardInterrupt should also result in a clean exit.
         finally:
             logging.info("Application shutdown.")
-
 
 if __name__ == "__main__":
     app = App()
